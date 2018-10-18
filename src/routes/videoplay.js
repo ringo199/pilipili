@@ -1,6 +1,6 @@
 import React from 'react';
 // import { connect } from 'dva';
-// import { Button, Select } from 'antd';
+import { Button } from 'antd';
 // import PropTypes from 'prop-types';
 import moment from 'moment';
 import styles from './videobody.less';
@@ -36,6 +36,14 @@ const VideoPlay = props => {
                     <div>{moment(item.offset_time).format('mm:ss')}&emsp;{item.text}&emsp;{moment(item.create_time).format('MM-DD hh:mm')}</div>
                 )}
             </div>
+            <Button
+                onClick={
+                    () => {
+                        props.onChangeWidth(null);
+                        props.onChangeHeight('calc(100vh)');
+                    }}
+            >切换网页全屏
+            </Button>
         </div>
     )}
 
