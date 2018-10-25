@@ -1,9 +1,9 @@
 import React from 'react';
 // import { connect } from 'dva';
-import { Button } from 'antd';
+// import { Button } from 'antd';
 // import PropTypes from 'prop-types';
 import moment from 'moment';
-import styles from './videobody.less';
+import styles from '../less/videobody.less';
 import Xgplayer from 'xgplayer-react';
 
 const config = props => ({
@@ -15,6 +15,11 @@ const config = props => ({
         switch: 'on', //开启'on',关闭'off'
         url: './danmu.json',
         method: 'get'
+    },
+    enterLogo:{ //视频加载页logo
+      url: '/img/logo.jpg',
+      width: 231,
+      height: 115,
     },
 });
 
@@ -31,19 +36,19 @@ const VideoPlay = props => {
             <div className={styles.video_body_danmulist}>
                 弹幕列表<br/>
                 <div>时间&emsp;弹幕内容&emsp;发送时间</div>
-                {require('../../danmu.json').data.map(
+                {require('../../../danmu.json').data.map(
                     item =>
                     <div>{moment(item.offset_time).format('mm:ss')}&emsp;{item.text}&emsp;{moment(item.create_time).format('MM-DD hh:mm')}</div>
                 )}
             </div>
-            <Button
+            {/* <Button
                 onClick={
                     () => {
                         props.onChangeWidth(null);
                         props.onChangeHeight('calc(100vh)');
                     }}
             >切换网页全屏
-            </Button>
+            </Button> */}
         </div>
     )}
 

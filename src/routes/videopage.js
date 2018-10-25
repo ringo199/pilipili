@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import VideoPlay from './videoplay';
+import VideoPlay from './components/videoplay';
 
 class Videopage extends Component {
     constructor(props) {

@@ -1,5 +1,6 @@
 import React from 'react';
-import IndexPage from './routes/IndexPage';
+import Home from './routes/home';
+import Homepage from './routes/homepage';
 import VideoPage from './routes/videopage';
 import { LocaleProvider } from 'antd';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
@@ -15,8 +16,19 @@ const RouterConfig = ({ history }) => (
   <LocaleProvider locale={zh_CN}>
     <ConnectedRouter history={history} locale={zh_CN}>
       <Switch>
-        <Route path="/" exact component={IndexPage} />
-        <Route path="/pilipili" exact component={VideoPage} />
+        <Route
+          path="/"
+          component={route => (
+            <Home {...route}>
+              <Switch>
+                <Route path="/" exact component={Homepage} />
+                <Route path="/home" exact component={Homepage} />
+                <Route path="/pilipili" exact component={VideoPage} />
+                <Route path="/*" exact render={() => <div>404</div>} />
+              </Switch>
+            </Home>
+          )}
+        />
           {/* {account.map(({ path, ...dynamics }) => (
             <Route
               exact
