@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Breadcrumb, Icon, Divider, Avatar, Button, Tag } from 'antd';
 import moment from 'moment';
+import { connect } from 'dva';
 import VideoPlay from './components/videoplay';
 import styles from './less/videobody.less';
 
@@ -88,4 +89,8 @@ class Videopage extends Component {
     }
 }
 
-export default Videopage;
+export default connect(
+    state => ({
+      ...state.videopage,
+    }),
+  )(Videopage);

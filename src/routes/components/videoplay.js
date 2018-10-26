@@ -59,7 +59,7 @@ const VideoPlay = props => {
     // const checksize = () => {
 
     // };
-    
+
     // Xgplayer.install('checksize', checksize);
     return(
         <div className={styles.video_body}>
