@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Breadcrumb, Icon, Divider, Avatar, Button, Tag } from 'antd';
 import moment from 'moment';
+// import _ from 'lodash';
 import { connect } from 'dva';
 import VideoPlay from './components/videoplay';
 import styles from './less/videobody.less';
-
-const taglist = ['柚子社', '魔女的夜宴', 'サノバウィッチ'];
 
 class Videopage extends Component {
     constructor(props) {
@@ -13,44 +12,57 @@ class Videopage extends Component {
       this.state = {
       };
     }
+    componentDidMount() {
+        const { match: { params: { videoID } }, dispatch } = this.props;
+        if (videoID) {
+            dispatch({
+                type: 'videopage/getVideoInfoRemote',
+                payload: { videoID },
+              });
+        }
+    }
+    componentWillUnmount() {
+        this.props.dispatch({ type: 'videopage/clearRemote' });
+    }
     render() {
+        const { VideoInfo, UPInfo, taglist, danmuInfo } = this.props;
         return (
             <div className={styles.video_page}>
                 <div className={styles.video_page__topinfowarp}>
                     <div className={styles.video_page__topinfowarp_left}>
                         <div className={styles.video_page__topinfowarp_left_title}>
-                            柚子社8th「魔女的夜宴」OP Movie
+                            {VideoInfo.title}
                         </div>
                         <div className={styles.video_page__topinfowarp_left_info}>
                             <Breadcrumb>
-                                <Breadcrumb.Item>首页</Breadcrumb.Item>
-                                <Breadcrumb.Item>音乐</Breadcrumb.Item>
-                                <Breadcrumb.Item>音乐选集</Breadcrumb.Item>
+                                {VideoInfo.type && VideoInfo.type.map(item =>
+                                    <Breadcrumb.Item>{item}</Breadcrumb.Item>
+                                )}
                             </Breadcrumb>
                             &emsp;
-                            {moment(1420984252000).format('YYYY-MM-DD HH:mm:ss')}
+                            {moment(VideoInfo.date).format('YYYY-MM-DD HH:mm:ss')}
                         </div>
                         <div className={styles.video_page__topinfowarp_left_action}>
-                            <div><Icon type="play-circle" theme="outlined" /> 2.0万</div>
-                            <div><Icon type="align-left" theme="outlined" /> 63</div>
+                            <div><Icon type="play-circle" theme="outlined" /> {VideoInfo.videodata && VideoInfo.videodata.play}</div>
+                            <div><Icon type="align-left" theme="outlined" /> {danmuInfo.num}</div>
                             <Divider type="vertical" style={{padding: 0}}/>
-                            <div><Icon type="dollar" theme="outlined" /> 硬币67</div>
-                            <div><Icon type="star" theme="outlined" /> 收藏515</div>
+                            <div><Icon type="dollar" theme="outlined" /> 硬币{VideoInfo.videodata && VideoInfo.videodata.coin}</div>
+                            <div><Icon type="star" theme="outlined" /> 收藏{VideoInfo.videodata && VideoInfo.videodata.collection}</div>
                         </div>
                     </div>
                     <div className={styles.video_page__topinfowarp_right}>
                         <div className={styles.video_page__topinfowarp_right_avatar}>
-                            <Avatar size={68} src="//i0.hdslb.com/bfs/face/4fd0cf6de4436d6e46432df82d6abf67ae4cfa68.jpg@68w_68h.jpg" />
+                            <Avatar size={68} src={UPInfo.avatar} />
                         </div>
                         <div className={styles.video_page__topinfowarp_right_info}>
                             <div className={styles.video_page__topinfowarp_right_info_name}>
-                                昨夜丶Sakuya
+                                {UPInfo.name}
                             </div>
                             <div className={styles.video_page__topinfowarp_right_info_content}>
-                                我喜欢上了你 于是我买了日记 为了维系与花儿共飞散的光阴
+                                {UPInfo.intro}
                             </div>
                             <div className={styles.video_page__topinfowarp_right_info_sub}>
-                                投稿： 108 &emsp;&emsp;粉丝： 4125
+                                投稿： {UPInfo.UPdata && UPInfo.UPdata.submission} &emsp;&emsp;粉丝： {UPInfo.UPdata && UPInfo.UPdata.fans}
                             </div>
                             <Button
                                 type="primary"
@@ -72,14 +84,7 @@ class Videopage extends Component {
                     &nbsp;查看标签修改记录<Divider type="vertical" />查看标签使用说明
                 </div>
                 <div className={styles.video_page__footerinfowarp}>
-                    youtube<br />
-                    主題歌「恋せよ乙女！」<br />
-                    歌手の米倉千尋<br />
-                    （作詞:Riryka（Angel Note）、<br />
-                    作曲:Famishin（ゆずソフト）、<br />
-                    編曲:井ノ原智さん（Angel Note））<br />
-                    アニメーション制作：フロンティアチャイルド。<br />
-                    絵コンテ・撮影・3DCGI：ろど。<br />
+                    {VideoInfo.intr}
                 </div>
                 <div className={styles.video_page__comment}>
                     评论

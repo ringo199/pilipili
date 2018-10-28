@@ -11,21 +11,17 @@ const { TabPane } = Tabs;
 
 const config = props => ({
     id: 'pili',
-    url: '/video/1.mp4',
-    poster: '/img/1.jpg',
-    // pip: true,
+    url: props.VideoInfo.videoplay.url,
+    poster: props.VideoInfo.videoplay.poster,
     width: 1192,
     height: 750,
     bullet: {
         switch: 'on', //开启'on',关闭'off'
-        url: './danmu.json',
+        url: props.danmuInfo.url,
         method: 'get'
     },
-    enterLogo:{ //视频加载页logo
-      url: '/img/logo.jpg',
-      width: 231,
-      height: 115,
-    },
+    //视频加载页logo
+    enterLogo:props.VideoInfo.videoplay.enterLogo,
 });
 
 const columns = [{
@@ -56,35 +52,27 @@ const transformList = (list, transstr) => {
     return _.compact(viewList);
   }
 const VideoPlay = props => {
-    // const checksize = () => {
-
-    // };
-
-    // Xgplayer.install('checksize', checksize);
+    console.log('danmuInfo', props.danmuInfo);
     return(
         <div className={styles.video_body}>
-            <Xgplayer config={config(props)} format={'mp4'} playerInit={Player => Player} />
+            {props.VideoInfo.videoplay && props.danmuInfo.url &&
+            <Xgplayer config={config(props)} format={'mp4'} playerInit={Player => Player} />}
             <div className={styles.video_body_danmulist}>
-            <div className={styles.video_body_danmulist_head}>
-                <b style={{ fontSize: '20px' }}>1</b>人正在看，63条弹幕
-            </div>
-            <Tabs defaultActiveKey="2">
-                <TabPane tab="弹幕列表" key="2">
-                    <Table
-                        size="small"
-                        columns={columns}
-                        pagination={false}
-                        className={styles.video_body_danmulist_danmucontent}
-                        dataSource={transformList(require('../../../danmu.json').data, 'danmaku_id')}
-                    />
-                </TabPane>
-            </Tabs>
-                
-                {/* <div>时间&emsp;弹幕内容&emsp;发送时间</div>
-                {require('../../../danmu.json').data.map(
-                    item =>
-                    <div>{moment(item.offset_time).format('mm:ss')}&emsp;{item.text}&emsp;{moment(item.create_time).format('MM-DD hh:mm')}</div>
-                )} */}
+                <div className={styles.video_body_danmulist_head}>
+                    <b style={{ fontSize: '20px' }}>1</b>人正在看，{props.danmuInfo.num}条弹幕
+                </div>
+                <Tabs defaultActiveKey="2">
+                    <TabPane tab="弹幕列表" key="2">
+                        {props.danmuInfo.url &&
+                        <Table
+                            size="small"
+                            columns={columns}
+                            pagination={false}
+                            className={styles.video_body_danmulist_danmucontent}
+                            dataSource={transformList(props.danmuInfo.data, 'danmaku_id')}
+                        />}
+                    </TabPane>
+                </Tabs>
             </div>
         </div>
     )}

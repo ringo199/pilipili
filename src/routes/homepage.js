@@ -10,8 +10,13 @@ const datalist = {
     child: [
         {
             id: 1,
-            to: '/pilipili',
+            to: '/pilipili/pv1',
             src: '/img/1.jpg',
+        },
+        {
+            id: 2,
+            to: '/pilipili/pv2',
+            src: '/img/2.jpg',
         }
     ],
 }

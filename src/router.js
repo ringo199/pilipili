@@ -25,7 +25,7 @@ const routes = [
   },
   {
     // 播放页面
-    path: '/pilipili',
+    path: '/pilipili/pv:videoID',
     models: () => [import('./models/videopage')],
     component: () => import('./routes/videopage'),
   },
@@ -50,7 +50,7 @@ const RouterConfig = ({ history, app }) => (
                     />
                   ))
                 }
-                <Route path="/*" exact render={() => <div>404</div>} />
+                <Route path="*" exact render={() => <div>404</div>} />
               </Switch>
             </Home>
           )}
@@ -84,7 +84,7 @@ const RouterConfig = ({ history, app }) => (
           )}
         /> */}
         {/* <Redirect from="/temple" to="/temple/introduction" /> */}
-        <Route path="*" exact render={() => <div>404</div>} />
+        <Route path="/*" exact render={() => <div>404</div>} />
       </Switch>
     </ConnectedRouter>
   </LocaleProvider>
