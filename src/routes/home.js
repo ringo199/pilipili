@@ -18,7 +18,6 @@ const mainmenu = [
 ]
 
 const Home = ({ children }) => {
-  console.log('children', children);
   return (
     <div className={styles.home}>
       <Layout className={styles.home_lay}>

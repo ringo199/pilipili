@@ -11,3 +11,42 @@
     }
   }
 }
+
+.homepage{
+  padding: 0 60px;
+  :global(.ant-carousel .slick-slide) {
+    text-align: center;
+    height: 360px;
+    line-height: 360px;
+    background: #364d79;
+    overflow: hidden;
+  }
+  :global(.ant-carousel .slick-slide h3) {
+    color: #fff;
+  }
+  &_module{
+    // background: #ccc;
+    margin-top: 40px;
+    display: flex;
+    &_left{
+      width: 1200px;
+      &_col{
+        margin-bottom: 20px;
+        height: 170px;
+        &_warp{
+          margin: 0 10px;
+          height: 100%;
+          background: #ccc;
+          img{
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+    &_right{
+      width: ~"calc(100% - 1230px)";
+      margin-left: 30px;
+    }
+  }
+}
